@@ -1,24 +1,35 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import block from 'bem-cn';
+import {TableHeaderCell} from '..';
 import './style.scss';
+import {TABLE_FIELDS} from '../../constants';
 
-const defaultProps = {
-    bemClassName: block('table-header'),
-};
+const defaultProps = {};
 
-const propTypes = {
-    bemClassName: PropTypes.func,
-};
+const propTypes = {};
 
 const TableHeader =
     ({
-         bemClassName,
+         sortBy,
+         sortDirection,
+         sortUsers,
      }) => {
 
         return (
-            <thead className={bemClassName()}>
-
+            <thead className='table-header'>
+            <tr>
+                {TABLE_FIELDS.map((
+                    {
+                        key,
+                        title
+                    }) =>
+                    (<TableHeaderCell
+                        key={key}
+                        fieldName={key}
+                        title={title}
+                        sortBy={sortBy}
+                        sortDirection={sortDirection}
+                        sortData={sortUsers}/>))}
+            </tr>
             </thead>
         );
     };

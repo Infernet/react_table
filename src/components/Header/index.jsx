@@ -1,24 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import block from 'bem-cn';
 import './style.scss';
+import {FilterInput} from '..';
 
-const defaultProps = {
-    bemClassName: block('header'),
-};
+const defaultProps = {};
 
-const propTypes = {
-    bemClassName: PropTypes.func,
-};
+const propTypes = {};
 
 const Header =
-    ({
-         bemClassName,
-     }) => {
+    () => {
 
         return (
-            <header className={bemClassName()}>
-
+            <header className="header container">
+                <h1 className="header__title">Users Table</h1>
+                <FilterInput/>
             </header>
         );
     };

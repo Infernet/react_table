@@ -1,25 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import block from 'bem-cn';
 import './style.scss';
 
-const defaultProps = {
-    bemClassName: block('footer'),
-};
+const defaultProps = {};
 
-const propTypes = {
-    bemClassName: PropTypes.func,
-};
+const propTypes = {};
 
 const Footer =
-    ({
-         bemClassName,
-     }) => {
+    () => {
 
         return (
-            <footer className={bemClassName()}>
-
-            </footer>
+            <footer className="footer container"/>
         );
     };
 
