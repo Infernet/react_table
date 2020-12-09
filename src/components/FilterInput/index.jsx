@@ -42,7 +42,7 @@ const FilterInput =
             <div className="filter-input">
                 <form onSubmit={formHandler} action="#" className="filter-input__form">
                     <input type="text" className="form-control filter-input__input" value={value} onChange={handleInput}/>
-                    <button type="submit" className="btn btn-light filter-input__submit">Filter</button>
+                    <button type="submit" className="btn btn-light filter-input__submit">Поиск</button>
                 </form>
             </div>
         );

@@ -1,5 +1,14 @@
 .table-body-row {
+  cursor: pointer;
 
+
+  &:hover {
+
+  }
+
+  &_active {
+    background-color: #198754 !important;
+  }
 
   &__cell {
     width: 20%;

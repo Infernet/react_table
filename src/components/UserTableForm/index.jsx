@@ -28,13 +28,18 @@ const UserTableForm =
          sortBy,
          sortDirection,
          sortUsers,
+         pending,
+         filterData,
+         searchString,
+         addUser,
      }) => {
 
         return (
             <div className="user-table-form container-fluid">
-                <Header/>
+                <Header filterData={filterData} searchString={searchString} addUser={addUser}/>
                 <main className="user-table-form__main container">
                     <Table
+                        pending={pending}
                         sortUsers={sortUsers}
                         data={data}
                         sortBy={sortBy}

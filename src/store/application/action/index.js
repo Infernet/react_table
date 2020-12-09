@@ -2,6 +2,8 @@ import {
     GET_USERS,
     SORT_USERS,
     CHANGE_PAGE,
+    FILTER_DATA,
+    ADD_USER,
 } from '../types';
 
 
@@ -17,8 +19,14 @@ const applicationSortUsers = (fieldKey = null, sortDirection) => ({
     }
 });
 
+const applicationFilterData = (searchString = null) => ({type: FILTER_DATA.name, payload: searchString});
+
+const applicationAddUser = (user, callback = null) => ({type: ADD_USER.name, payload: {user, callback}});
+
 export {
     applicationGetUsers,
     applicationChangeCurrentPage,
-    applicationSortUsers
+    applicationSortUsers,
+    applicationFilterData,
+    applicationAddUser,
 };

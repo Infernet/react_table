@@ -4,9 +4,9 @@ const getPagesInfo = ({application: {pageSize, totalPages, currentPage}}) => ({
     currentPage
 });
 
-const getUserData = ({application: {data}}) => ({data});
+const getUserData = ({application: {data, filteredData}}) => ({data, filteredData});
 
-const getSortInfo = ({application: {sortBy, sortDirection}}) => ({sortBy, sortDirection});
+const getSortInfo = ({application: {sortBy, sortDirection, searchString}}) => ({sortBy, sortDirection, searchString});
 
 export {
     getPagesInfo,

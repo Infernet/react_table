@@ -1,5 +1,11 @@
 import React, {useEffect} from 'react';
-import {applicationChangeCurrentPage, applicationGetUsers, applicationSortUsers} from '../../store/rootActions';
+import {
+    applicationAddUser,
+    applicationChangeCurrentPage,
+    applicationFilterData,
+    applicationGetUsers,
+    applicationSortUsers
+} from '../../store/rootActions';
 import {connect} from 'react-redux';
 import {UserTableForm} from '../../components';
 import './style.scss';
@@ -19,6 +25,10 @@ const UsersPage =
          sortBy,
          sortDirection,
          sortUsers,
+         pending,
+         filterData,
+         searchString,
+         addUser
      }) => {
 
         useEffect(() => {
@@ -27,6 +37,10 @@ const UsersPage =
 
         return (
             <UserTableForm
+                addUser={addUser}
+                searchString={searchString}
+                filterData={filterData}
+                pending={pending}
                 sortBy={sortBy}
                 sortDirection={sortDirection}
                 sortUsers={sortUsers}
@@ -48,6 +62,8 @@ const mapStateToProps =
              currentPage,
              sortBy,
              sortDirection,
+             pending,
+             searchString,
          }
      }) => ({
         data: currentPageData,
@@ -55,12 +71,16 @@ const mapStateToProps =
         currentPage,
         sortBy,
         sortDirection,
+        pending,
+        searchString,
     });
 
 const mapDispatchToProps = {
     getData: applicationGetUsers,
     goToPage: applicationChangeCurrentPage,
-    sortUsers:applicationSortUsers,
+    sortUsers: applicationSortUsers,
+    filterData: applicationFilterData,
+    addUser:applicationAddUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersPage);

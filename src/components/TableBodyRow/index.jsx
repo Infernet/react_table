@@ -1,9 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './style.scss';
 
-const defaultProps = {};
+const defaultProps = {
+    id: 0,
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    selectUser: () => null,
+    isSelect: false,
+};
 
-const propTypes = {};
+const propTypes = {
+    id: PropTypes.number,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    email: PropTypes.string,
+    phone: PropTypes.string,
+    selectUser: PropTypes.func,
+    isSelect: PropTypes.bool,
+};
 
 const TableBodyRow =
     ({
@@ -12,10 +29,16 @@ const TableBodyRow =
          lastName,
          email,
          phone,
+         selectUser,
+         isSelect,
      }) => {
+        const handler = (event) => {
+            event.preventDefault();
+            if (!isSelect) selectUser();
+        };
 
         return (
-            <tr className="table-body-row">
+            <tr className={`table-body-row${isSelect ? ' table-body-row_active' : ''}`} onClick={handler}>
                 <td className="table-body-row__cell">
                     <p>{id}</p>
                 </td>
