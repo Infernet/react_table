@@ -1,7 +1,7 @@
 import {takeLatest, put, select} from 'redux-saga/effects';
 import {v4 as uuid} from 'uuid';
-import {ADD_USER, CHANGE_PAGE, FILTER_DATA, GET_USERS, SORT_USERS} from '../types';
-import {getPagesInfo, getSortInfo, getUserData} from '../selector';
+import {ADD_USER, CHANGE_PAGE, FILTER_DATA, GET_USERS, CHANGE_SELECTED_USER, SORT_USERS} from '../types';
+import {getPagesInfo, getSelectedUser, getSortInfo, getUserData} from '../selector';
 import {sortUsersByField, filterUsersBySearchString} from '../../../helpers';
 
 
@@ -13,14 +13,15 @@ const getUsers = function* () {
         const users = yield request.json();
         const data = users.map((data) => ({key: uuid(), data}));
         const totalPages = Math.ceil(data.length / pageSize);
-
         yield put({
             type: GET_USERS.SUCCESS, payload: {
                 data,
                 filteredData: data,
                 currentPage: 1,
                 totalPages,
-                currentPageData: data.slice(0, pageSize)
+                currentPageData: data.slice(0, pageSize),
+                selectedUserKey: null,
+                selectedUserData: null
             }
         });
     } catch (error) {
@@ -29,23 +30,23 @@ const getUsers = function* () {
 };
 
 const changePage = function* ({payload: page}) {
-    const {pageSize, totalPages, currentPage} = yield select(getPagesInfo);
-    yield put({type: CHANGE_PAGE.REQUEST});
-    if (currentPage === page || page < 1 || page > totalPages) {
-        yield put({type: CHANGE_PAGE.FAILURE});
-    } else {
-        try {
+    try {
+        const {pageSize, totalPages, currentPage} = yield select(getPagesInfo);
+        yield put({type: CHANGE_PAGE.REQUEST});
+        if (currentPage === page || page < 1 || page > totalPages) {
+            yield put({type: CHANGE_PAGE.FAILURE});
+        } else {
             const {filteredData} = yield select(getUserData);
             yield put({
                 type: CHANGE_PAGE.SUCCESS,
                 payload: {
                     currentPage: page,
-                    currentPageData: filteredData.slice(pageSize * (page - 1), pageSize * (page))
+                    currentPageData: filteredData.slice(pageSize * (page - 1), pageSize * (page)),
                 }
             });
-        } catch (error) {
-            yield put({type: CHANGE_PAGE.FAILURE});
         }
+    } catch (error) {
+        yield put({type: CHANGE_PAGE.FAILURE});
     }
 };
 
@@ -102,7 +103,6 @@ const filterUsers = function* ({payload: search}, insideCall = false) {
             });
         }
     } catch (error) {
-        console.error(error);
         yield put({type: FILTER_DATA.FAILURE});
     }
 };
@@ -146,12 +146,47 @@ const addUser = function* ({payload: {user, callback}}) {
     }
 };
 
+const selectUser = function* ({payload: key}) {
+    try {
+        yield put({type: CHANGE_SELECTED_USER.REQUEST});
+        if (key !== null) {
+            const {selectedUserKey} = yield select(getSelectedUser);
+            if (selectedUserKey && selectedUserKey === key) {
+                yield put({
+                    type: CHANGE_SELECTED_USER.SUCCESS,
+                    payload: {
+                        selectedUserKey: null,
+                        selectedUserData: null
+                    }
+                });
+                return;
+            }
+            const {data} = yield select(getUserData);
+            const {data: userData} = data.find((({key: k}) => (k === key)));
+            if (userData) {
+                yield put({
+                    type: CHANGE_SELECTED_USER.SUCCESS,
+                    payload: {
+                        selectedUserData: userData,
+                        selectedUserKey: key
+                    }
+                });
+                return;
+            }
+        }
+        yield put({type: CHANGE_SELECTED_USER.FAILURE});
+    } catch (error) {
+        yield put({type: CHANGE_SELECTED_USER.FAILURE});
+    }
+};
+
 const applicationSaga = function* () {
     yield takeLatest(GET_USERS.name, getUsers);
     yield takeLatest(CHANGE_PAGE.name, changePage);
     yield takeLatest(SORT_USERS.name, sortUsers);
     yield takeLatest(FILTER_DATA.name, filterUsers);
     yield takeLatest(ADD_USER.name, addUser);
+    yield takeLatest(CHANGE_SELECTED_USER.name, selectUser);
 };
 
 

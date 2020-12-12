@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {TableHeader, TableBody, TableFooter, Loader} from '..';
 import './style.scss';
-import PropTypes from 'prop-types';
 
 const defaultProps = {
     data: [],
@@ -27,13 +27,19 @@ const Table =
          sortDirection,
          sortUsers,
          pending,
+         selectUser,
+         selectedUserKey,
      }) => {
         return (
             <div className="data-table">
                 <div className="data-table__wrapper">
                     <table className="data-table__table table table-dark table-hover">
                         <TableHeader sortUsers={sortUsers} sortDirection={sortDirection} sortBy={sortBy}/>
-                        <TableBody users={data}/>
+                        <TableBody
+                            users={data}
+                            selectedUserKey={selectedUserKey}
+                            selectUser={selectUser}
+                        />
                     </table>
                 </div>
                 <TableFooter

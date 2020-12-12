@@ -6,14 +6,27 @@ const defaultProps = {};
 
 const propTypes = {};
 
-const TableBody = ({users}) => {
+const TableBody =
+    ({
+         users,
+         selectUser,
+         selectedUserKey,
+     }) => {
 
-    return (
-        <tbody className="table-body">
-        {users.map(({key, data}) => (<TableBodyRow key={key} {...data}/>))}
-        </tbody>
-    );
-};
+        return (
+            <tbody className="table-body">
+            {users.map(({key, data}) => (
+                <TableBodyRow
+                    key={key}
+                    userId={key}
+                    selectUser={selectUser}
+                    isSelect={selectedUserKey === key}
+                    {...data}
+                />
+            ))}
+            </tbody>
+        );
+    };
 
 
 TableBody.defaultProps = defaultProps;

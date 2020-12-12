@@ -3,7 +3,7 @@ import {
     applicationAddUser,
     applicationChangeCurrentPage,
     applicationFilterData,
-    applicationGetUsers,
+    applicationGetUsers, applicationSelectUser,
     applicationSortUsers
 } from '../../store/rootActions';
 import {connect} from 'react-redux';
@@ -28,7 +28,10 @@ const UsersPage =
          pending,
          filterData,
          searchString,
-         addUser
+         addUser,
+         selectedUserKey,
+         selectedUserData,
+         selectUser,
      }) => {
 
         useEffect(() => {
@@ -37,6 +40,9 @@ const UsersPage =
 
         return (
             <UserTableForm
+                selectedUserKey={selectedUserKey}
+                selectedUserData={selectedUserData}
+                selectUser={selectUser}
                 addUser={addUser}
                 searchString={searchString}
                 filterData={filterData}
@@ -48,7 +54,8 @@ const UsersPage =
                 totalPages={totalPages}
                 currentPage={currentPage}
                 goToPage={goToPage}/>);
-    };
+    }
+;
 
 
 UsersPage.defaultProps = defaultProps;
@@ -64,6 +71,8 @@ const mapStateToProps =
              sortDirection,
              pending,
              searchString,
+             selectedUserKey,
+             selectedUserData,
          }
      }) => ({
         data: currentPageData,
@@ -73,6 +82,8 @@ const mapStateToProps =
         sortDirection,
         pending,
         searchString,
+        selectedUserKey,
+        selectedUserData,
     });
 
 const mapDispatchToProps = {
@@ -80,7 +91,8 @@ const mapDispatchToProps = {
     goToPage: applicationChangeCurrentPage,
     sortUsers: applicationSortUsers,
     filterData: applicationFilterData,
-    addUser:applicationAddUser,
+    addUser: applicationAddUser,
+    selectUser: applicationSelectUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersPage);

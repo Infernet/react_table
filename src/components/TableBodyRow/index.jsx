@@ -29,12 +29,13 @@ const TableBodyRow =
          lastName,
          email,
          phone,
-         selectUser,
          isSelect,
+         userId,
+         selectUser,
      }) => {
         const handler = (event) => {
             event.preventDefault();
-            if (!isSelect) selectUser();
+            selectUser(userId);
         };
 
         return (

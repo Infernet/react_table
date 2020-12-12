@@ -9,8 +9,8 @@ import './style.scss';
 
 const defaultProps = {
     data: [],
-    currentPage:0,
-    totalPages:0,
+    currentPage: 0,
+    totalPages: 0,
 };
 
 const propTypes = {
@@ -32,6 +32,9 @@ const UserTableForm =
          filterData,
          searchString,
          addUser,
+         selectUser,
+         selectedUserData,
+         selectedUserKey,
      }) => {
 
         return (
@@ -39,6 +42,9 @@ const UserTableForm =
                 <Header filterData={filterData} searchString={searchString} addUser={addUser}/>
                 <main className="user-table-form__main container">
                     <Table
+                        selectedUserKey={selectedUserKey}
+                        selectedUserData={selectedUserData}
+                        selectUser={selectUser}
                         pending={pending}
                         sortUsers={sortUsers}
                         data={data}
@@ -48,7 +54,7 @@ const UserTableForm =
                         totalPages={totalPages}
                         goToPage={goToPage}/>
                 </main>
-                <Footer/>
+                <Footer userData={selectedUserData} selectedKey={selectedUserKey}/>
             </div>
         );
     };
