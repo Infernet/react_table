@@ -5,14 +5,14 @@ import {getPagesInfo, getSelectedUser, getSortInfo, getUserData} from '../select
 import {sortUsersByField, filterUsersBySearchString} from '../../../helpers';
 
 
-const getUsers = function* () {
+const getUsers = function* ({payload: {url, callback}}) {
     try {
         yield put({type: GET_USERS.REQUEST});
         const {pageSize} = yield select(getPagesInfo);
-        const request = yield fetch(process.env.REACT_APP_DATA_URL);
+        const request = yield fetch(url);
         const users = yield request.json();
         const data = users.map((data) => ({key: uuid(), data}));
-        const totalPages = Math.ceil(data.length / pageSize);
+        const totalPages = Math.ceil(data.length / pageSize) || 1;
         yield put({
             type: GET_USERS.SUCCESS, payload: {
                 data,
@@ -24,6 +24,7 @@ const getUsers = function* () {
                 selectedUserData: null
             }
         });
+        if (callback) callback();
     } catch (error) {
         yield put({type: GET_USERS.FAILURE});
     }
@@ -86,7 +87,7 @@ const filterUsers = function* ({payload: search}, insideCall = false) {
                 payload: {
                     filteredData,
                     currentPage: 1,
-                    totalPages: Math.ceil(filteredData.length / pageSize),
+                    totalPages: Math.ceil(filteredData.length / pageSize) || 1,
                     currentPageData: filteredData.slice(0, pageSize),
                     searchString: search
                 }
@@ -96,7 +97,7 @@ const filterUsers = function* ({payload: search}, insideCall = false) {
                 type: FILTER_DATA.SUCCESS, payload: {
                     filteredData: sortUsersByField(data, sortBy, sortDirection),
                     currentPage: 1,
-                    totalPages: Math.ceil(data.length / pageSize),
+                    totalPages: Math.ceil(data.length / pageSize) || 1,
                     currentPageData: data.slice(0, pageSize),
                     searchString: null,
                 }
@@ -133,7 +134,7 @@ const addUser = function* ({payload: {user, callback}}) {
                     data: newData,
                     filteredData: newData,
                     currentPage: 1,
-                    totalPages: Math.ceil(newData.length / pageSize),
+                    totalPages: Math.ceil(newData.length / pageSize) || 1,
                     currentPageData: data.slice(0, pageSize)
                 }
             });

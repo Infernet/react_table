@@ -7,12 +7,14 @@ const defaultProps = {
     filterData: () => null,
     searchString: null,
     addUser: () => null,
+    pending:false,
 };
 
 const propTypes = {
     filterData: PropTypes.func,
     searchString: PropTypes.string,
     addUser: PropTypes.func,
+    pending:PropTypes.bool,
 };
 
 const Header =
@@ -20,13 +22,14 @@ const Header =
          filterData,
          searchString,
          addUser,
+         pending,
      }) => {
 
         return (
             <header className="header container">
                 <h1 className="header__title">Users Table</h1>
                 <div className="header__wrapper">
-                    <AddUserInput addUser={addUser}/>
+                    <AddUserInput addUser={addUser} pending={pending}/>
                     <FilterInput filterData={filterData} searchString={searchString}/>
                 </div>
             </header>

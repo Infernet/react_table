@@ -5,15 +5,18 @@ import './style.scss';
 
 const defaultProps = {
     addUser: () => null,
+    pending: false,
 };
 
 const propTypes = {
     addUser: PropTypes.func,
+    pending: PropTypes.bool,
 };
 
 const AddUserInput =
     ({
          addUser,
+         pending,
      }) => {
         const [isModalActive, setIsModalActive] = useState(false);
 
@@ -30,7 +33,11 @@ const AddUserInput =
         return (
             <div className="add-user-input">
                 <button className="btn btn-light add-user-input__button" onClick={openModal}>Добавить</button>
-                {isModalActive && <AddUserModal closeModal={closeModal} addUser={addUser}/>}
+                {isModalActive &&
+                (<AddUserModal
+                    pending={pending}
+                    closeModal={closeModal}
+                    addUser={addUser}/>)}
             </div>
         );
     };

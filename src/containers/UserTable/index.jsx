@@ -32,30 +32,24 @@ const UsersPage =
          selectedUserKey,
          selectedUserData,
          selectUser,
-     }) => {
-
-        useEffect(() => {
-            getData();
-        }, [getData]);
-
-        return (
-            <UserTableForm
-                selectedUserKey={selectedUserKey}
-                selectedUserData={selectedUserData}
-                selectUser={selectUser}
-                addUser={addUser}
-                searchString={searchString}
-                filterData={filterData}
-                pending={pending}
-                sortBy={sortBy}
-                sortDirection={sortDirection}
-                sortUsers={sortUsers}
-                data={data}
-                totalPages={totalPages}
-                currentPage={currentPage}
-                goToPage={goToPage}/>);
-    }
-;
+     }) => (
+        <UserTableForm
+            getUsers={getData}
+            selectedUserKey={selectedUserKey}
+            selectedUserData={selectedUserData}
+            selectUser={selectUser}
+            addUser={addUser}
+            searchString={searchString}
+            filterData={filterData}
+            pending={pending}
+            sortBy={sortBy}
+            sortDirection={sortDirection}
+            sortUsers={sortUsers}
+            data={data}
+            totalPages={totalPages}
+            currentPage={currentPage}
+            goToPage={goToPage}/>
+    );
 
 
 UsersPage.defaultProps = defaultProps;

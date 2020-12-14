@@ -7,7 +7,7 @@ import {
 } from '../types';
 
 
-const applicationGetUsers = () => ({type: GET_USERS.name});
+const applicationGetUsers = (url = null, cb = null) => ({type: GET_USERS.name, payload: {url, callback: cb}});
 
 const applicationChangeCurrentPage = (page = 0) => ({type: CHANGE_PAGE.name, payload: page});
 

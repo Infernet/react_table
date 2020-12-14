@@ -9,7 +9,7 @@ const INITIAL_STATE = {
     searchString: null,
     currentPage: 1,
     totalPages: 0,
-    pageSize: 5,
+    pageSize: 50,
     pending: false,
     selectedUserKey: null,
     selectedUserData: null,

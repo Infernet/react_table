@@ -13,6 +13,7 @@ import ModalWrapper from './ModalWrapper';
 import AddUserInput from './AddUserInput';
 import AddUserModal from './AddUserModal';
 import CustomInput from './CustomInput';
+import SelectDataSizeModal from './SelectDataSizeModal';
 
 
 export {
@@ -31,4 +32,5 @@ export {
     AddUserInput,
     AddUserModal,
     CustomInput,
+    SelectDataSizeModal,
 };

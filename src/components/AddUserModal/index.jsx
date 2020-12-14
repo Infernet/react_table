@@ -8,17 +8,20 @@ import {isEmail, isPhone} from '../../helpers';
 const defaultProps = {
     closeModal: () => null,
     addUser: () => null,
+    pending: false,
 };
 
 const propTypes = {
     closeModal: PropTypes.func,
     addUser: PropTypes.func,
+    pending: PropTypes.bool,
 };
 
 const AddUserModal =
     ({
          closeModal,
          addUser,
+         pending,
      }) => {
         const [user, setUser] = useState({
             id: null,
@@ -73,11 +76,11 @@ const AddUserModal =
                     };
                 });
             else
-                addUser({...user, id: Number(user.id)},closeModal);
+                addUser({...user, id: Number(user.id)}, closeModal);
         };
 
         return (
-            <ModalWrapper closeModal={closeModal}>
+            <ModalWrapper closeModal={closeModal} pending={pending}>
                 <form onSubmit={handleForm} className="add-user-modal">
                     <h1 className="add-user-modal__title">Новый товар</h1>
                     <div className="add-user-modal__form">
